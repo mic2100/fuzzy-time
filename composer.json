@@ -1,0 +1,24 @@
+{
+  "name": "mic2100/fuzzy-time",
+  "description": "A fuzzy time calculator",
+  "keywords": ["time"],
+  "homepage": "http://github.com/mic2100/fuzzy-time",
+  "license": "WTFPL",
+  "require": {
+    "php": ">=5.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.5.0"
+  },
+  "authors": [
+    {
+      "name": "Michael Bardsley",
+      "email": "me@mic-b.co.uk"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Mic2100\\FuzzyTime\\": "src/"
+    }
+  }
+}
