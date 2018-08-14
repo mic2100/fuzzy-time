@@ -3,7 +3,7 @@
   "description": "A fuzzy time calculator",
   "keywords": ["time"],
   "homepage": "http://github.com/mic2100/fuzzy-time",
-  "license": "WTFPL",
+  "license": "MIT",
   "require": {
     "php": ">=5.4"
   },
@@ -13,7 +13,7 @@
   "authors": [
     {
       "name": "Michael Bardsley",
-      "email": "me@mic-b.co.uk"
+      "email": "mic.bardsley@outlook.com"
     }
   ],
   "autoload": {

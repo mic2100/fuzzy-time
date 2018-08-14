@@ -38,9 +38,8 @@ class Generator
         $format = $this->getTimeFormat();
         $search = [':minutes', ':divider', ':hour'];
         $replace = [$minutes, $divider, $hour];
-        $string = str_replace($search, $replace, $format);
 
-        echo $string . PHP_EOL;
+        return str_replace($search, $replace, $format);
     }
 
     private function getMinuteString()
