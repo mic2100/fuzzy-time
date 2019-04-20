@@ -6,15 +6,31 @@ namespace Mic2100\FuzzyTime\Language;
  * Interface LanguageInterface
  *
  * @package Mic2100\FuzzyTime\Language
- * @author Michael Bardsley <@mic_bardsley>
+ * @author Mike Bardsley <mic.bardsley@outlook.com>
  */
 interface LanguageInterface
 {
-    public function getMinuteString(string $minutes);
+    /**
+     * @param string $minutes
+     * @return string
+     */
+    public function getMinuteString(string $minutes): string;
 
-    public function getHourString(string $hour);
+    /**
+     * @param string $hour
+     * @return string
+     */
+    public function getHourString(string $hour): string;
 
-    public function getDividerString(int $key);
+    /**
+     * @param int $key
+     * @return string mixed
+     */
+    public function getDividerString(int $key): string;
 
-    public function getFormat(int $key);
+    /**
+     * @param int $key
+     * @return string
+     */
+    public function getFormat(int $key): string;
 }

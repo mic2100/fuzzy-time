@@ -6,10 +6,11 @@ namespace Mic2100\FuzzyTime\Language;
  * Class AbstractLanguage
  *
  * @package Mic2100\FuzzyTime\Language
- * @author Michael Bardsley <@mic_bardsley>
+ * @author Mike Bardsley <mic.bardsley@outlook.com>
  */
 abstract class AbstractLanguage implements LanguageInterface
 {
+    const HANDLE = '';
     const ON_THE_HOUR = 0;
     const BEFORE_HALF_PAST = 1;
     const AFTER_HALF_PAST = 2;
@@ -35,10 +36,21 @@ abstract class AbstractLanguage implements LanguageInterface
     protected $formats = [];
 
     /**
+     * AbstractLanguage constructor.
+     * @throws \Exception - If no handle is set
+     */
+    public function __construct()
+    {
+        if (static::HANDLE === '') {
+            throw new \Exception(sprintf('Class: %s must have and handle set', get_class($this)));
+        }
+    }
+
+    /**
      * @param string $minutes
      * @return string
      */
-    public function getMinuteString(string $minutes)
+    public function getMinuteString(string $minutes): string
     {
         if (!isset($this->minutes[$minutes])) {
             throw new \InvalidArgumentException('Invalid minutes passed: ' . $minutes);
@@ -51,7 +63,7 @@ abstract class AbstractLanguage implements LanguageInterface
      * @param string $hour
      * @return string
      */
-    public function getHourString(string $hour)
+    public function getHourString(string $hour): string
     {
         if (!isset($this->hours[$hour])) {
             throw new \InvalidArgumentException('Invalid hour passed: ' . $hour);
@@ -64,7 +76,7 @@ abstract class AbstractLanguage implements LanguageInterface
      * @param int $key
      * @return string mixed
      */
-    public function getDividerString(int $key)
+    public function getDividerString(int $key): string
     {
         if (!isset($this->divider[$key])) {
             throw new \InvalidArgumentException('Invalid divider key passed: ' . $key);
@@ -75,9 +87,9 @@ abstract class AbstractLanguage implements LanguageInterface
 
     /**
      * @param int $key
-     * @return string mixed
+     * @return string
      */
-    public function getFormat(int $key)
+    public function getFormat(int $key): string
     {
         if (!isset($this->formats[$key])) {
             throw new \InvalidArgumentException('Invalid format key passed: ' . $key);

@@ -5,14 +5,14 @@ namespace Mic2100\FuzzyTime\Language\Dictionaries;
 use Mic2100\FuzzyTime\Language\AbstractLanguage;
 
 /**
- * Class En
+ * Class English
  *
  * Time translations for English
  *
  * @package Mic2100\FuzzyTime\Language
  * @author Mike Bardsley <mic.bardsley@outlook.com>
  */
-class En extends AbstractLanguage
+class English extends AbstractLanguage
 {
     const HANDLE = 'english';
 
