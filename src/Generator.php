@@ -3,6 +3,8 @@
 namespace Mic2100\FuzzyTime;
 
 use DateTime;
+use Exception;
+use InvalidArgumentException;
 use Mic2100\FuzzyTime\Language\AbstractLanguage;
 use Mic2100\FuzzyTime\Language\Dictionaries\EnGb;
 use Mic2100\FuzzyTime\Language\LanguageInterface;
@@ -130,18 +132,26 @@ class Generator
         ],
     ];
 
+    /**
+     * Generator constructor.
+     *
+     * @param LanguageInterface|null $language
+     */
     public function __construct(LanguageInterface $language = null)
     {
         $this->language = $language ?? new EnGb;
     }
 
     /**
+     * Gets the fuzzy time based on the $time param or the current time
+     *
      * @param DateTime|null $time
      *
-     * @return mixed
-     * @throws \Exception
+     * @return string
+     * @throws InvalidArgumentException - If the config cannot be found
+     * @throws Exception - If there is an issue when creating a DateTime object
      */
-    public function getFuzzyTime(DateTime $time = null)
+    public function getFuzzyTime(DateTime $time = null): string
     {
         $this->time = $time ?? new DateTime;
 
@@ -153,29 +163,57 @@ class Generator
     }
 
     /**
+     * Gets the mimnute string based on the current time from the config
+     *
      * @return string
      */
-    private function getMinuteString()
+    private function getMinuteString(): string
     {
-        return $this->iterateConfig($this->minuteConfig, function ($config) {
-            return $this->language->getMinuteString($config['string']);
-        }, 'number of minutes');
+        return $this->processConfiguration($this->minuteConfig, __METHOD__, 'getMinuteString');
     }
 
     /**
+     * Gets the divider string based on the current time from the config
+     *
      * @return string
      */
-    private function getDividerString()
+    private function getDividerString(): string
     {
-        return $this->iterateConfig($this->dividerConfig, function ($config) {
-            return $this->language->getDividerString($config['string']);
-        }, 'divider');
+        return $this->processConfiguration($this->dividerConfig, __METHOD__, 'getDividerString');
     }
 
     /**
+     * Gets the time format based on the current time from the config
+     *
      * @return string
      */
-    private function getHourString()
+    private function getTimeFormat(): string
+    {
+        return $this->processConfiguration($this->timeFormatConfig, __METHOD__, 'getFormat');
+    }
+
+    /**
+     * Process the configuration
+     *
+     * @param array $configuration
+     * @param string $functionName
+     * @param string $methodName
+     *
+     * @return string
+     */
+    private function processConfiguration(array $configuration, string $functionName, string $methodName): string
+    {
+        return $this->iterateConfig($configuration, function ($config) use ($methodName) {
+            return $this->language->$methodName($config['string']);
+        }, $functionName);
+    }
+
+    /**
+     * Gets the hour string based on the current time
+     *
+     * @return string
+     */
+    private function getHourString(): string
     {
         $hour = $this->time->format('H');
         if ($hour == '23') {
@@ -189,25 +227,16 @@ class Generator
     }
 
     /**
-     * @return string
-     */
-    private function getTimeFormat()
-    {
-        return $this->iterateConfig($this->timeFormatConfig, function ($config) {
-            return $this->language->getFormat($config['string']);
-        }, 'time format');
-    }
-
-    /**
      * Iterate the configuration and execute the $function if the $config matches
      *
      * @param array $configuration
      * @param callable $function
      * @param string $functionName
      *
-     * @return mixed
+     * @return string
+     * @throws InvalidArgumentException - If the config cannot be found
      */
-    private function iterateConfig(array $configuration, callable $function, string $functionName)
+    private function iterateConfig(array $configuration, callable $function, string $functionName): string
     {
         $time = $this->time->format('i.s');
         foreach ($configuration as $config) {
@@ -216,9 +245,8 @@ class Generator
             }
         }
 
-
-        throw new \InvalidArgumentException(
-            sprintf('Unknown %s when getting for the time: %s', $functionName, $time)
+        throw new InvalidArgumentException(
+            sprintf('Function: %s failed to get the time for: %s', $functionName, $time)
         );
     }
 }
