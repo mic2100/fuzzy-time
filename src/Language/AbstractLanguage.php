@@ -8,7 +8,7 @@ namespace Mic2100\FuzzyTime\Language;
  * @package Mic2100\FuzzyTime\Language
  * @author Michael Bardsley <@mic_bardsley>
  */
-abstract class AbstractLanguage
+abstract class AbstractLanguage implements LanguageInterface
 {
     const ON_THE_HOUR = 0;
     const BEFORE_HALF_PAST = 1;
@@ -38,7 +38,7 @@ abstract class AbstractLanguage
      * @param string $minutes
      * @return string
      */
-    public function getMinuteString($minutes)
+    public function getMinuteString(string $minutes)
     {
         if (!isset($this->minutes[$minutes])) {
             throw new \InvalidArgumentException('Invalid minutes passed: ' . $minutes);
@@ -51,7 +51,7 @@ abstract class AbstractLanguage
      * @param string $hour
      * @return string
      */
-    public function getHourString($hour)
+    public function getHourString(string $hour)
     {
         if (!isset($this->hours[$hour])) {
             throw new \InvalidArgumentException('Invalid hour passed: ' . $hour);
@@ -61,10 +61,10 @@ abstract class AbstractLanguage
     }
 
     /**
-     * @param string $key
+     * @param int $key
      * @return string mixed
      */
-    public function getDividerString($key)
+    public function getDividerString(int $key)
     {
         if (!isset($this->divider[$key])) {
             throw new \InvalidArgumentException('Invalid divider key passed: ' . $key);
@@ -74,10 +74,10 @@ abstract class AbstractLanguage
     }
 
     /**
-     * @param string $key
+     * @param int $key
      * @return string mixed
      */
-    public function getFormat($key)
+    public function getFormat(int $key)
     {
         if (!isset($this->formats[$key])) {
             throw new \InvalidArgumentException('Invalid format key passed: ' . $key);

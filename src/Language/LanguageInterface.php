@@ -10,9 +10,11 @@ namespace Mic2100\FuzzyTime\Language;
  */
 interface LanguageInterface
 {
-    public function getMinuteString($minutes);
+    public function getMinuteString(string $minutes);
 
-    public function getHourString($hour);
+    public function getHourString(string $hour);
 
-    public function getDividerString($key);
+    public function getDividerString(int $key);
+
+    public function getFormat(int $key);
 }

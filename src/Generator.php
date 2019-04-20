@@ -4,7 +4,8 @@ namespace Mic2100\FuzzyTime;
 
 use DateTime;
 use Mic2100\FuzzyTime\Language\AbstractLanguage;
-use Mic2100\FuzzyTime\Language\EnGb;
+use Mic2100\FuzzyTime\Language\Dictionaries\EnGb;
+use Mic2100\FuzzyTime\Language\LanguageInterface;
 
 /**
  * Class Generator
@@ -15,7 +16,7 @@ use Mic2100\FuzzyTime\Language\EnGb;
 class Generator
 {
     /**
-     * @var AbstractLanguage
+     * @var LanguageInterface
      */
     private $language;
 
@@ -24,121 +25,156 @@ class Generator
      */
     private $time;
 
-    public function __construct(AbstractLanguage $language = null)
+    /**
+     * @var array
+     */
+    private $minuteConfig = [
+        [
+            'from' => '00.00',
+            'to' => '02.30',
+            'string' => '00'
+        ],[
+            'from' => '57.30',
+            'to' => '59.60',
+            'string' => '00'
+        ],[
+            'from' => '02.30',
+            'to' => '07.30',
+            'string' => '05'
+        ],[
+            'from' => '07.30',
+            'to' => '12.30',
+            'string' => '10'
+        ],[
+            'from' => '12.30',
+            'to' => '17.30',
+            'string' => '15'
+        ],[
+            'from' => '17.30',
+            'to' => '22.30',
+            'string' => '20'
+        ],[
+            'from' => '22.30',
+            'to' => '27.30',
+            'string' => '25'
+        ],[
+            'from' => '27.30',
+            'to' => '32.30',
+            'string' => '30'
+        ],[
+            'from' => '32.30',
+            'to' => '37.30',
+            'string' => '35'
+        ],[
+            'from' => '37.30',
+            'to' => '42.30',
+            'string' => '40'
+        ],[
+            'from' => '42.30',
+            'to' => '47.30',
+            'string' => '45'
+        ],[
+            'from' => '47.30',
+            'to' => '52.30',
+            'string' => '50'
+        ],[
+            'from' => '52.30',
+            'to' => '57.30',
+            'string' => '55'
+        ],
+    ];
+
+    /**
+     * @var array
+     */
+    private $dividerConfig = [
+        [
+            'from' => '00.00',
+            'to' => '02.30',
+            'string' => AbstractLanguage::ON_THE_HOUR,
+        ],[
+            'from' => '57.30',
+            'to' => '59.60',
+            'string' => AbstractLanguage::ON_THE_HOUR,
+        ],[
+            'from' => '02.30',
+            'to' => '30.00',
+            'string' => AbstractLanguage::BEFORE_HALF_PAST,
+        ],[
+            'from' => '30.00',
+            'to' => '57.30',
+            'string' => AbstractLanguage::AFTER_HALF_PAST,
+        ],
+    ];
+
+    /**
+     * @var array
+     */
+    private $timeFormatConfig = [
+        [
+            'from' => '00.00',
+            'to' => '02.30',
+            'string' => AbstractLanguage::ON_THE_HOUR,
+        ],[
+            'from' => '57.30',
+            'to' => '59.60',
+            'string' => AbstractLanguage::ON_THE_HOUR,
+        ],[
+            'from' => '02.30',
+            'to' => '30.00',
+            'string' => AbstractLanguage::BEFORE_HALF_PAST,
+        ],[
+            'from' => '30.00',
+            'to' => '57.30',
+            'string' => AbstractLanguage::AFTER_HALF_PAST,
+        ],
+    ];
+
+    public function __construct(LanguageInterface $language = null)
     {
-        $this->language = $language ?: new EnGb;
+        $this->language = $language ?? new EnGb;
     }
 
+    /**
+     * @param DateTime|null $time
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function getFuzzyTime(DateTime $time = null)
     {
-        $this->time = $time ?: new DateTime;
-        $minutes = $this->getMinuteString();
-        $divider = $this->getDividerString();
-        $hour = $this->getHourString();
-        $format = $this->getTimeFormat();
-        $search = [':minutes', ':divider', ':hour'];
-        $replace = [$minutes, $divider, $hour];
+        $this->time = $time ?? new DateTime;
 
-        return str_replace($search, $replace, $format);
+        return str_replace(
+            [':minutes', ':divider', ':hour'],
+            [$this->getMinuteString(), $this->getDividerString(), $this->getHourString()],
+            $this->getTimeFormat()
+        );
     }
 
+    /**
+     * @return string
+     */
     private function getMinuteString()
     {
-        $time = $this->time->format('i.s');
-        switch (true) {
-            case ($time >= '00.00' && $time < '02.30'):
-            case ($time >= '57.30' && $time <= '59.59'):
-                //o'clock
-                $minuteString = $this->language->getMinuteString('00');
-                break;
-
-            case ($time >= '02.30' && $time < '07.30'):
-                //five
-                $minuteString = $this->language->getMinuteString('05');
-                break;
-
-            case ($time >= '07.30' && $time < '12.30'):
-                //ten
-                $minuteString = $this->language->getMinuteString('10');
-                break;
-
-            case ($time >= '12.30' && $time < '17.30'):
-                //fifteen
-                $minuteString = $this->language->getMinuteString('15');
-                break;
-
-            case ($time >= '17.30' && $time < '22.30'):
-                //twenty
-                $minuteString = $this->language->getMinuteString('20');
-                break;
-
-            case ($time >= '22.30' && $time < '27.30'):
-                //twenty five
-                $minuteString = $this->language->getMinuteString('20') . ' ' . $this->language->getMinuteString('05');
-                break;
-
-            case ($time >= '27.30' && $time < '32.30'):
-                //thirty
-                $minuteString = $this->language->getMinuteString('30');
-                break;
-
-            case ($time >= '32.30' && $time < '37.30'):
-                //thirty five
-                $minuteString = $this->language->getMinuteString('20') . ' ' . $this->language->getMinuteString('05');
-                break;
-
-            case ($time >= '37.30' && $time < '42.30'):
-                //forty
-                $minuteString = $this->language->getMinuteString('40');
-                break;
-
-            case ($time >= '42.30' && $time < '47.30'):
-                //forty five
-                $minuteString = $this->language->getMinuteString('45');
-                break;
-
-            case ($time >= '47.30' && $time < '52.30'):
-                //fifty
-                $minuteString = $this->language->getMinuteString('50');
-                break;
-
-            case ($time >= '52.30' && $time < '57.30'):
-                //fifty five
-                $minuteString = $this->language->getMinuteString('55');
-                break;
-
-            default:
-                throw new \InvalidArgumentException('Unable to calculate the number of minutes');
-        }
-
-        return $minuteString;
+        return $this->iterateConfig($this->minuteConfig, function ($config) {
+            return $this->language->getMinuteString($config['string']);
+        }, 'number of minutes');
     }
 
+    /**
+     * @return string
+     */
     private function getDividerString()
     {
-        $time = $this->time->format('i');
-        switch (true) {
-            case ($time >= '00.00' && $time < '02.30'):
-            case ($time >= '57.30' && $time <= '59.59'):
-                //o'clock
-                $dividerString = $this->language->getDividerString(AbstractLanguage::ON_THE_HOUR);
-                break;
-
-            case ($time >= '02.30' && $time <= '30'):
-                $dividerString = $this->language->getDividerString(AbstractLanguage::BEFORE_HALF_PAST);
-                break;
-
-            case ($time > '30' && $time < '57.30'):
-                $dividerString = $this->language->getDividerString(AbstractLanguage::AFTER_HALF_PAST);
-                break;
-
-            default:
-                throw new \InvalidArgumentException('Unable to find the divider incorrect time passed: ' . $time);
-        }
-
-        return $dividerString;
+        return $this->iterateConfig($this->dividerConfig, function ($config) {
+            return $this->language->getDividerString($config['string']);
+        }, 'divider');
     }
 
+    /**
+     * @return string
+     */
     private function getHourString()
     {
         $hour = $this->time->format('H');
@@ -152,28 +188,37 @@ class Generator
         return $this->language->getHourString($hour);
     }
 
+    /**
+     * @return string
+     */
     private function getTimeFormat()
     {
+        return $this->iterateConfig($this->timeFormatConfig, function ($config) {
+            return $this->language->getFormat($config['string']);
+        }, 'time format');
+    }
+
+    /**
+     * Iterate the configuration and execute the $function if the $config matches
+     *
+     * @param array $configuration
+     * @param callable $function
+     * @param string $functionName
+     *
+     * @return mixed
+     */
+    private function iterateConfig(array $configuration, callable $function, string $functionName)
+    {
         $time = $this->time->format('i.s');
-        switch (true) {
-            case ($time >= '00.00' && $time < '02.30'):
-            case ($time >= '57.30' && $time <= '59.59'):
-                //o'clock
-                $formatString = $this->language->getFormat(AbstractLanguage::ON_THE_HOUR);
-                break;
-
-            case ($time >= '02.30' && $time < '32.30'):
-                $formatString = $this->language->getFormat(AbstractLanguage::BEFORE_HALF_PAST);
-                break;
-
-            case ($time >= '32.30' && $time < '57.30'):
-                $formatString = $this->language->getFormat(AbstractLanguage::AFTER_HALF_PAST);
-                break;
-
-            default:
-                throw new \InvalidArgumentException('Unknown time when getting the format: ' . $time);
+        foreach ($configuration as $config) {
+            if ($time >= $config['from'] && $time < $config['to']) {
+                return $function($config);
+            }
         }
 
-        return $formatString;
+
+        throw new \InvalidArgumentException(
+            sprintf('Unknown %s when getting for the time: %s', $functionName, $time)
+        );
     }
 }

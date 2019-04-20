@@ -1,6 +1,8 @@
 <?php
 
-namespace Mic2100\FuzzyTime\Language;
+namespace Mic2100\FuzzyTime\Language\Dictionaries;
+
+use Mic2100\FuzzyTime\Language\AbstractLanguage;
 
 /**
  * Class EnGb
@@ -23,7 +25,9 @@ class EnGb extends AbstractLanguage
         '10' => 'ten',
         '15' => 'quarter',
         '20' => 'twenty',
+        '25' => 'twenty five',
         '30' => 'half',
+        '35' => 'twenty five',
         '40' => 'twenty',
         '45' => 'quarter',
         '50' => 'ten',
