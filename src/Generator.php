@@ -139,7 +139,7 @@ class Generator
      */
     public function __construct(LanguageInterface $language = null)
     {
-        $this->language = $language ?? new EnGb;
+        $this->language = $language ?? new EnGb();
     }
 
     /**
@@ -153,7 +153,7 @@ class Generator
      */
     public function getFuzzyTime(DateTime $time = null): string
     {
-        $this->time = $time ?? new DateTime;
+        $this->time = $time ?? new DateTime('now');
 
         return str_replace(
             [':minutes', ':divider', ':hour'],
