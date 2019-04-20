@@ -5,15 +5,17 @@ namespace Mic2100\FuzzyTime\Language\Dictionaries;
 use Mic2100\FuzzyTime\Language\AbstractLanguage;
 
 /**
- * Class EnGb
+ * Class En
  *
- * Time translations for English (Great Britain)
+ * Time translations for English
  *
  * @package Mic2100\FuzzyTime\Language
- * @author Michael Bardsley <@mic_bardsley>
+ * @author Mike Bardsley <mic.bardsley@outlook.com>
  */
-class EnGb extends AbstractLanguage
+class En extends AbstractLanguage
 {
+    const HANDLE = 'english';
+
     /**
      * Represents the required minute entries for the languages
      *

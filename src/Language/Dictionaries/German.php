@@ -7,13 +7,15 @@ use Mic2100\FuzzyTime\Language\AbstractLanguage;
 /**
  * Class De
  *
- * Time translations for English (Great Britain)
+ * Time translations for German
  *
  * @package Mic2100\FuzzyTime\Language
- * @author Michael Bardsley <@mic_bardsley>
+ * @author Mike Bardsley <mic.bardsley@outlook.com>
  */
 class De extends AbstractLanguage
 {
+    const HANDLE = 'german';
+
     /**
      * Represents the required minute entries for the languages
      *
