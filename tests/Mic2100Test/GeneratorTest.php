@@ -3,6 +3,7 @@
 namespace Mic2100Test;
 
 use DateTime;
+use Exception;
 use Mic2100\FuzzyTime\Generator;
 use Mic2100\FuzzyTime\GeneratorFactory;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +16,7 @@ class GeneratorTest extends TestCase
     private $generator;
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function setUp(): void
     {
@@ -29,13 +30,11 @@ class GeneratorTest extends TestCase
      * @param string $expectedResponse
      *
      * @dataProvider dataFuzzyTimeDates
-     * @throws \Exception
+     * @throws Exception
      */
     public function testGetFuzzyTimeExpectSuccess(DateTime $time, string $expectedResponse)
     {
-        $repsonse = $this->generator->getFuzzyTime($time);
-
-        $this->assertSame($expectedResponse, $repsonse);
+        $this->assertSame($expectedResponse, $this->generator->getFuzzyTime($time));
     }
 
     public function dataFuzzyTimeDates(): array

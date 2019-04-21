@@ -37,6 +37,111 @@ abstract class AbstractLanguage implements LanguageInterface
     protected $formats = [];
 
     /**
+     * @var array
+     */
+    protected $minuteConfig = [
+        [
+            'from' => '00.00',
+            'to' => '02.30',
+            'string' => '00'
+        ],[
+            'from' => '57.30',
+            'to' => '59.60',
+            'string' => '00'
+        ],[
+            'from' => '02.30',
+            'to' => '07.30',
+            'string' => '05'
+        ],[
+            'from' => '07.30',
+            'to' => '12.30',
+            'string' => '10'
+        ],[
+            'from' => '12.30',
+            'to' => '17.30',
+            'string' => '15'
+        ],[
+            'from' => '17.30',
+            'to' => '22.30',
+            'string' => '20'
+        ],[
+            'from' => '22.30',
+            'to' => '27.30',
+            'string' => '25'
+        ],[
+            'from' => '27.30',
+            'to' => '32.30',
+            'string' => '30'
+        ],[
+            'from' => '32.30',
+            'to' => '37.30',
+            'string' => '35'
+        ],[
+            'from' => '37.30',
+            'to' => '42.30',
+            'string' => '40'
+        ],[
+            'from' => '42.30',
+            'to' => '47.30',
+            'string' => '45'
+        ],[
+            'from' => '47.30',
+            'to' => '52.30',
+            'string' => '50'
+        ],[
+            'from' => '52.30',
+            'to' => '57.30',
+            'string' => '55'
+        ],
+    ];
+
+    /**
+     * @var array
+     */
+    protected $dividerConfig = [
+        [
+            'from' => '00.00',
+            'to' => '02.30',
+            'string' => AbstractLanguage::ON_THE_HOUR,
+        ],[
+            'from' => '57.30',
+            'to' => '59.60',
+            'string' => AbstractLanguage::ON_THE_HOUR,
+        ],[
+            'from' => '02.30',
+            'to' => '32.30',
+            'string' => AbstractLanguage::BEFORE_HALF_PAST,
+        ],[
+            'from' => '32.30',
+            'to' => '57.30',
+            'string' => AbstractLanguage::AFTER_HALF_PAST,
+        ],
+    ];
+
+    /**
+     * @var array
+     */
+    protected $timeFormatConfig = [
+        [
+            'from' => '00.00',
+            'to' => '02.30',
+            'string' => AbstractLanguage::ON_THE_HOUR,
+        ],[
+            'from' => '57.30',
+            'to' => '59.60',
+            'string' => AbstractLanguage::ON_THE_HOUR,
+        ],[
+            'from' => '02.30',
+            'to' => '30.00',
+            'string' => AbstractLanguage::BEFORE_HALF_PAST,
+        ],[
+            'from' => '30.00',
+            'to' => '57.30',
+            'string' => AbstractLanguage::AFTER_HALF_PAST,
+        ],
+    ];
+
+    /**
      * AbstractLanguage constructor.
      * @throws \Exception - If no handle is set
      */
@@ -97,5 +202,29 @@ abstract class AbstractLanguage implements LanguageInterface
         }
 
         return $this->formats[$key];
+    }
+
+    /**
+     * @return array
+     */
+    public function getMinuteConfig(): array
+    {
+        return $this->minuteConfig;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDividerConfig(): array
+    {
+        return $this->dividerConfig;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTimeFormatConfig(): array
+    {
+        return $this->timeFormatConfig;
     }
 }

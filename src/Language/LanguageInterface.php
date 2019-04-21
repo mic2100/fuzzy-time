@@ -34,4 +34,19 @@ interface LanguageInterface
      * @return string
      */
     public function getFormat(int $key): string;
+
+    /**
+     * @return array
+     */
+    public function getMinuteConfig(): array;
+
+    /**
+     * @return array
+     */
+    public function getDividerConfig(): array;
+
+    /**
+     * @return array
+     */
+    public function getTimeFormatConfig(): array;
 }
