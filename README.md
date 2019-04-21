@@ -14,13 +14,14 @@ i.e. quarter past nine or half past two
 use Mic2100\FuzzyTime\GeneratorAwareTrait;
 use Mic2100\FuzzyTime\GeneratorFactory;
 use Mic2100\FuzzyTime\Language\Dictionaries\English;
+use Mic2100\FuzzyTime\Language\Dictionaries\German;
 use Mic2100\FuzzyTime\Language\LanguageFactory;
 
 date_default_timezone_set('Europe/London');
 
 $factory = new GeneratorFactory();
-$english = $factory->get();
-$german = $factory->get(LanguageFactory::get('german'));
+$english = $factory->get(); //or $factory->get(LanguageFactory::get(English::HANDLE);  
+$german = $factory->get(LanguageFactory::get(German::HANDLE));
 
 class SampleClass
 {
@@ -32,7 +33,7 @@ $traitClass = new SampleClass();
 while (true) {
     echo $english->getFuzzyTime() . PHP_EOL;
     echo $german->getFuzzyTime() . PHP_EOL;
-    echo $traitClass->getFuzzyTime((new DateTime('-25 MINS')), LanguageFactory::get(English::HANDLE)) . PHP_EOL;
+    echo $traitClass->getFuzzyTime((new DateTime('-25 MINS'))) . PHP_EOL;
     sleep(30);
 }
 
