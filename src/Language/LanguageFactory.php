@@ -7,6 +7,13 @@ use InvalidArgumentException;
 use Mic2100\FuzzyTime\Language\Dictionaries\German;
 use Mic2100\FuzzyTime\Language\Dictionaries\English;
 
+/**
+ * Class LanguageFactory
+ *
+ * @package Mic2100\FuzzyTime\Language
+ * @author Mike Bardsley <mic.bardsley@outlook.com>
+ * @license MIT
+ */
 class LanguageFactory
 {
     /**

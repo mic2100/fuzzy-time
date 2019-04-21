@@ -6,8 +6,6 @@ use DateTime;
 use Exception;
 use InvalidArgumentException;
 use Mic2100\FuzzyTime\Language\AbstractLanguage;
-use Mic2100\FuzzyTime\Language\Dictionaries\English;
-use Mic2100\FuzzyTime\Language\LanguageFactory;
 use Mic2100\FuzzyTime\Language\LanguageInterface;
 
 /**
@@ -15,6 +13,7 @@ use Mic2100\FuzzyTime\Language\LanguageInterface;
  *
  * @package Mic2100\FuzzyTime
  * @author Mike Bardsley <mic.bardsley@outlook.com>
+ * @license MIT
  */
 class Generator
 {
@@ -143,7 +142,7 @@ class Generator
      */
     public function __construct(LanguageInterface $language)
     {
-        $this->language = $language ?? LanguageFactory::get(English::HANDLE);
+        $this->language = $language;
     }
 
     /**

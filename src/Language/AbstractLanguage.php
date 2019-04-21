@@ -7,6 +7,7 @@ namespace Mic2100\FuzzyTime\Language;
  *
  * @package Mic2100\FuzzyTime\Language
  * @author Mike Bardsley <mic.bardsley@outlook.com>
+ * @license MIT
  */
 abstract class AbstractLanguage implements LanguageInterface
 {

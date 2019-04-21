@@ -11,6 +11,7 @@ use Mic2100\FuzzyTime\Language\AbstractLanguage;
  *
  * @package Mic2100\FuzzyTime\Language
  * @author Mike Bardsley <mic.bardsley@outlook.com>
+ * @license MIT
  */
 class English extends AbstractLanguage
 {
