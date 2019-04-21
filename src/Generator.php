@@ -100,10 +100,10 @@ class Generator
             'string' => AbstractLanguage::ON_THE_HOUR,
         ],[
             'from' => '02.30',
-            'to' => '30.00',
+            'to' => '32.30',
             'string' => AbstractLanguage::BEFORE_HALF_PAST,
         ],[
-            'from' => '30.00',
+            'from' => '32.30',
             'to' => '57.30',
             'string' => AbstractLanguage::AFTER_HALF_PAST,
         ],
