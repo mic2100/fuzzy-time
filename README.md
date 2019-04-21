@@ -1,5 +1,13 @@
 # Fuzzy Time
 
+This was inspired from the fuzzy time clock that exists on Ubuntu. It gives you a rough idea what the time is without you knowing the exact minutes.
+
+i.e. quarter past nine or half past two
+
+### Installation
+
+`composer require mic2100/fuzzy-time`
+
 ### Usage
 
 ```lang=php
@@ -7,8 +15,6 @@ use Mic2100\FuzzyTime\GeneratorAwareTrait;
 use Mic2100\FuzzyTime\GeneratorFactory;
 use Mic2100\FuzzyTime\Language\Dictionaries\English;
 use Mic2100\FuzzyTime\Language\LanguageFactory;
-
-require_once 'vendor/autoload.php';
 
 date_default_timezone_set('Europe/London');
 
@@ -44,3 +50,5 @@ while (true) {
  * twenty five to three //$traitClass->getFuzzyTime((new DateTime('-25 MINS')), LanguageFactory::get(English::HANDLE))
  */
 ```
+
+The `LanguageFactory` **DOES NOT** have to be used if you only want to use English because this is the default language
