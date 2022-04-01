@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  php:
+    image: mic2100/php-fpm:7.4
+    volumes:
+      - ./:/var/www
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    external: true
+    name: frontend

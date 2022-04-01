@@ -2,9 +2,9 @@
 
 namespace Mic2100\FuzzyTime;
 
-use DateTime;
-use Exception;
-use InvalidArgumentException;
+use DateTimeImmutable;
+use DateTimeInterface;
+use Mic2100\FuzzyTime\Exceptions\GeneratorException;
 use Mic2100\FuzzyTime\Language\LanguageInterface;
 
 /**
@@ -19,20 +19,17 @@ class Generator
     /**
      * @var LanguageInterface
      */
-    private $language;
+    private LanguageInterface $language;
 
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
-    private $time;
+    private DateTimeInterface $time;
 
     /**
      * Generator constructor.
      *
      * @param LanguageInterface $language
-     *
-     * @throws Exception - If the handle is not set on the language class
-     * @throws InvalidArgumentException - If an incorrect language is selected
      */
     public function __construct(LanguageInterface $language)
     {
@@ -42,15 +39,14 @@ class Generator
     /**
      * Gets the fuzzy time based on the $time param or the current time
      *
-     * @param DateTime|null $time
+     * @param DateTimeInterface|null $time
      *
      * @return string
-     * @throws InvalidArgumentException - If the config cannot be found
-     * @throws Exception - If there is an issue when creating a DateTime object
+     * @throws GeneratorException
      */
-    public function getFuzzyTime(DateTime $time = null): string
+    public function getFuzzyTime(?DateTimeInterface $time = null): string
     {
-        $this->time = $time ?? new DateTime('now');
+        $this->time = $time ?? new DateTimeImmutable('now');
 
         return str_replace(
             [':minutes', ':divider', ':hour'],
@@ -60,9 +56,10 @@ class Generator
     }
 
     /**
-     * Gets the mimnute string based on the current time from the config
+     * Gets the minute string based on the current time from the config
      *
      * @return string
+     * @throws GeneratorException
      */
     private function getMinuteString(): string
     {
@@ -77,6 +74,7 @@ class Generator
      * Gets the divider string based on the current time from the config
      *
      * @return string
+     * @throws GeneratorException
      */
     private function getDividerString(): string
     {
@@ -91,6 +89,7 @@ class Generator
      * Gets the time format based on the current time from the config
      *
      * @return string
+     * @throws GeneratorException
      */
     private function getTimeFormat(): string
     {
@@ -109,6 +108,7 @@ class Generator
      * @param string $methodName
      *
      * @return string
+     * @throws GeneratorException
      */
     private function processConfiguration(array $configuration, string $functionName, string $methodName): string
     {
@@ -143,19 +143,17 @@ class Generator
      * @param string $functionName
      *
      * @return string
-     * @throws InvalidArgumentException - If the config cannot be found
+     * @throws GeneratorException - If the config cannot be found
      */
     private function iterateConfig(array $configuration, callable $function, string $functionName): string
     {
-        $time = $this->time->format('i.s');
+        $formattedTime = $this->time->format('i.s');
         foreach ($configuration as $config) {
-            if ($time >= $config['from'] && $time < $config['to']) {
+            if ($formattedTime >= $config['from'] && $formattedTime < $config['to']) {
                 return $function($config);
             }
         }
 
-        throw new InvalidArgumentException(
-            sprintf('Function: %s failed to get the time for: %s', $functionName, $time)
-        );
+        throw GeneratorException::failedToGetTimeConfig($functionName, $formattedTime);
     }
 }

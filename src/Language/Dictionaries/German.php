@@ -15,14 +15,14 @@ use Mic2100\FuzzyTime\Language\AbstractLanguage;
  */
 class German extends AbstractLanguage
 {
-    const HANDLE = 'german';
+    public const HANDLE = 'german';
 
     /**
      * Represents the required minute entries for the languages
      *
      * @var array
      */
-    protected $minutes = [
+    protected array $minutes = [
         '00' => '',
         '05' => 'fünf',
         '10' => 'zehn',
@@ -42,7 +42,7 @@ class German extends AbstractLanguage
      *
      * @var array
      */
-    protected $hours = [
+    protected array $hours = [
         '00' => 'zwölf',
         '01' => 'ein',
         '02' => 'zwei',
@@ -73,7 +73,7 @@ class German extends AbstractLanguage
     /**
      * Represents the required divider entries for the languages
      *
-     * Dividers are used to split a the hours and minutes
+     * Dividers are used to split the hours and minutes
      *
      * e.g.
      * ten to five - the 'to' is the divider
@@ -81,7 +81,7 @@ class German extends AbstractLanguage
      *
      * @var array
      */
-    protected $divider = [
+    protected array $divider = [
         self::ON_THE_HOUR => 'uhr',
         self::BEFORE_HALF_PAST => 'nach',
         self::AFTER_HALF_PAST => 'vor',
@@ -92,7 +92,7 @@ class German extends AbstractLanguage
      *
      * @var array
      */
-    protected $formats = [
+    protected array $formats = [
         self::ON_THE_HOUR => ':hour :divider',
         self::BEFORE_HALF_PAST => ':minutes :divider :hour',
         self::AFTER_HALF_PAST => ':minutes :divider :hour',

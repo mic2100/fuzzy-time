@@ -2,7 +2,8 @@
 
 namespace Mic2100\FuzzyTime;
 
-use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Exception;
 use InvalidArgumentException;
 use Mic2100\FuzzyTime\Language\Dictionaries\English;
@@ -21,17 +22,17 @@ trait GeneratorAwareTrait
     /**
      * Gets the fuzzy time string or throws an exception
      *
-     * @param DateTime|null $time
+     * @param DateTimeInterface|null $time
      * @param LanguageInterface|null $language
      *
      * @return string
      * @throws InvalidArgumentException -
      * @throws Exception
      */
-    public function getFuzzyTime(DateTime $time = null, LanguageInterface $language = null): string
+    public function getFuzzyTime(?DateTimeInterface $time = null, ?LanguageInterface $language = null): string
     {
-        return (new Generator(
-            $language ?? LanguageFactory::get(English::HANDLE)
-        ))->getFuzzyTime($time ?? new DateTime('now'));
+        $selectedLanguage = $language ?? LanguageFactory::get(English::HANDLE);
+
+        return GeneratorFactory::get($selectedLanguage)->getFuzzyTime($time ?? new DateTimeImmutable('now'));
     }
 }

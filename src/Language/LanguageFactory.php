@@ -2,8 +2,7 @@
 
 namespace Mic2100\FuzzyTime\Language;
 
-use Exception;
-use InvalidArgumentException;
+use Mic2100\FuzzyTime\Exceptions\LanguageException;
 use Mic2100\FuzzyTime\Language\Dictionaries\German;
 use Mic2100\FuzzyTime\Language\Dictionaries\English;
 
@@ -22,8 +21,7 @@ class LanguageFactory
      * @param string $language
      *
      * @return LanguageInterface
-     * @throws Exception - If the handle is not set on the language class
-     * @throws InvalidArgumentException - If an incorrect language is selected
+     * @throws LanguageException - If an incorrect language is selected
      */
     public static function get(string $language): LanguageInterface
     {
@@ -35,9 +33,7 @@ class LanguageFactory
                 return new German();
 
             default:
-                throw new InvalidArgumentException(
-                    sprintf('An invalid language was selected: %s', var_export($language, true))
-                );
+                throw LanguageException::invalidLanguageSelected($language);
         }
     }
 }

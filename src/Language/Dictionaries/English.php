@@ -15,14 +15,14 @@ use Mic2100\FuzzyTime\Language\AbstractLanguage;
  */
 class English extends AbstractLanguage
 {
-    const HANDLE = 'english';
+    public const HANDLE = 'english';
 
     /**
      * Represents the required minute entries for the languages
      *
      * @var array
      */
-    protected $minutes = [
+    protected array $minutes = [
         '00' => '',
         '05' => 'five',
         '10' => 'ten',
@@ -42,7 +42,7 @@ class English extends AbstractLanguage
      *
      * @var array
      */
-    protected $hours = [
+    protected array $hours = [
         '00' => 'twelve',
         '01' => 'one',
         '02' => 'two',
@@ -69,11 +69,10 @@ class English extends AbstractLanguage
         '23' => 'eleven',
     ];
 
-
     /**
      * Represents the required divider entries for the languages
      *
-     * Dividers are used to split a the hours and minutes
+     * Dividers are used to split the hours and minutes
      *
      * e.g.
      * ten to five - the 'to' is the divider
@@ -81,7 +80,7 @@ class English extends AbstractLanguage
      *
      * @var array
      */
-    protected $divider = [
+    protected array $divider = [
         self::ON_THE_HOUR => 'o\'clock',
         self::BEFORE_HALF_PAST => 'past',
         self::AFTER_HALF_PAST => 'to',
@@ -92,7 +91,7 @@ class English extends AbstractLanguage
      *
      * @var array
      */
-    protected $formats = [
+    protected array $formats = [
         self::ON_THE_HOUR => ':hour :divider',
         self::BEFORE_HALF_PAST => ':minutes :divider :hour',
         self::AFTER_HALF_PAST => ':minutes :divider :hour',

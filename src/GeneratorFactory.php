@@ -26,7 +26,7 @@ class GeneratorFactory
      * @throws Exception - If the handle is not set on the language class
      * @throws InvalidArgumentException - If an incorrect language is selected
      */
-    public static function get(LanguageInterface $language = null)
+    public static function get(LanguageInterface $language = null): Generator
     {
         return new Generator($language ?? LanguageFactory::get(English::HANDLE));
     }
